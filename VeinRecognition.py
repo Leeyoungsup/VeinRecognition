@@ -10,10 +10,12 @@ def GaussMaskCreate(mask_size,sigma):
     return Mask
 imsi=cv2.imread("./1.png",cv2.IMREAD_GRAYSCALE)
 imsi=cv2.resize(imsi,dsize=(400,400),interpolation=cv2.INTER_AREA)
-LowpassFilterMask=GaussMaskCreate(3,10)
-plt.imshow(imsi,'gray')
-plt.show()
+LowpassFilterMask=GaussMaskCreate(3,5)
+
 for i in range(5):
     imsi1=cv2.filter2D(imsi,-1,LowpassFilterMask)
 
-cv2.imshow("2",imsi1)
+ret,imsi1 = cv2.threshold(imsi1, 90, 255, cv2.THRESH_TRUNC)
+ret,imsi1 = cv2.threshold(imsi1, 100, 255, cv2.THRESH_OTSU)
+plt.imshow(imsi1,'gray')
+plt.show()
